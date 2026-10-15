@@ -1,0 +1,22 @@
+{
+    "user1": {
+        "firstName": "Ava",
+        "lastName": "Patel",
+        "email": "ava.patel@example.com",
+        "gender": "Female",
+        "mobileNumber": "9876543210",
+        "dateOfBirth": "15081995",
+        "subjects": [
+            "Maths",
+            "Physics"
+        ],
+        "hobbies": [
+            "Sports",
+            "Reading"
+        ],
+        "picture": "C:\\Users\\indra\\Documents\\Dymon2\\testData\\picture.jpg",
+        "currentAddress": "42 Cedar Street, Springfield",
+        "state": "NCR",
+        "city": "Delhi"
+    }
+}
