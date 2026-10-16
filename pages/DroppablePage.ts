@@ -19,7 +19,7 @@ export class DroppablePage {
 
     async dragAndDrop(): Promise<void> {
         await expect(this.subHeader).toHaveText('Droppable');
-        await this.page.waitForLoadState('networkidle');
+        await this.page.waitForLoadState('networkidle', { timeout: 60000 });
         await this.dragMe.scrollIntoViewIfNeeded();
         await this.dragMe.waitFor({ state: 'visible' });
         await this.droppable.waitFor({ state: 'visible' });

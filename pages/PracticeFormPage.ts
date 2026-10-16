@@ -30,6 +30,7 @@ export class PracticeFormPage {
     private readonly submitButton: Locator
     private readonly confirmationTitle: Locator
     private readonly submissionRows: Locator
+    private readonly calendar: Locator
 
     private readonly monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
     private readonly fullMonthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
@@ -49,10 +50,11 @@ export class PracticeFormPage {
         this.submitButton = page.locator('#submit')
         this.confirmationTitle = page.locator('#example-modal-sizes-title-lg')
         this.submissionRows = page.locator('.table-responsive tbody tr')
+        this.calendar = page.locator('.react-datepicker')
     }
 
     async registerUser(user: PracticeFormUser): Promise<void> {
-        await this.page.waitForLoadState('networkidle');
+        await this.page.waitForLoadState('networkidle', { timeout: 60000 });
         await this.enterFirstName(user.firstName)
         await this.enterLastName(user.lastName)
         await this.enterEmail(user.email)
@@ -85,10 +87,11 @@ export class PracticeFormPage {
     }
 
     async enterSubjects(subjects: string[]): Promise<void> {
-        await this.subjectsInput.click();
         for (const subject of subjects) {
+            await this.subjectsInput.click();
             await this.subjectsInput.fill(subject)
-            await this.subjectsInput.press('Enter')
+            await this.page.waitForTimeout(500)
+            await this.page.keyboard.press('Enter')
         }
     }
 
@@ -124,6 +127,10 @@ export class PracticeFormPage {
 
         const formattedDate = `${day} ${this.monthNames[monthNumber - 1]} ${year}`
         await this.dateOfBirthInput.fill(formattedDate)
+        if (await this.calendar.isVisible()) {
+            await this.page.keyboard.press('Escape')
+        }
+        await this.calendar.waitFor({ state: 'hidden' })
     }
 
     async selectHobbies(hobbies: string[]): Promise<void> {
