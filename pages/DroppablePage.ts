@@ -16,11 +16,11 @@ export class DroppablePage {
     }
 
     async dragAndDrop(): Promise<void> {
-        try{
-            await this.adBanner.waitFor({ state: 'visible' });
-        } catch (error) {
-            console.log('Ad banner not found or not visible, proceeding with drag and drop.');
-        }
+        // try{
+        //     await this.adBanner.waitFor({ state: 'visible' });
+        // } catch (error) {
+        //     console.log('Ad banner not found or not visible, proceeding with drag and drop.');
+        // }
         await this.dragMe.scrollIntoViewIfNeeded();
         await this.dragMe.waitFor({ state: 'visible' });
         await this.droppable.waitFor({ state: 'visible' });

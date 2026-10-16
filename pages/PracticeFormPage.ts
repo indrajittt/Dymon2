@@ -51,6 +51,22 @@ export class PracticeFormPage {
         this.submissionRows = page.locator('.table-responsive tbody tr')
     }
 
+    async registerUser(user: PracticeFormUser): Promise<void> {
+        await this.enterFirstName(user.firstName)
+        await this.enterLastName(user.lastName)
+        await this.enterEmail(user.email)
+        await this.selectGender(user.gender)
+        await this.enterMobileNumber(user.mobileNumber)
+        await this.enterDateOfBirth(user.dateOfBirth)
+        await this.enterSubjects(user.subjects)
+        await this.selectHobbies(user.hobbies)
+        // await this.choosePicture(user.picture)
+        await this.enterCurrentAddress(user.currentAddress)
+        await this.selectState(user.state)
+        await this.selectCity(user.city)
+        await this.clickOnSubmit()
+    }
+
     async enterFirstName(firstName: string): Promise<void> {
         await this.firstNameInput.fill(firstName)
     }
