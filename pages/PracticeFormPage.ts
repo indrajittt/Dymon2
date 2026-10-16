@@ -52,6 +52,7 @@ export class PracticeFormPage {
     }
 
     async registerUser(user: PracticeFormUser): Promise<void> {
+        await this.page.waitForLoadState('networkidle');
         await this.enterFirstName(user.firstName)
         await this.enterLastName(user.lastName)
         await this.enterEmail(user.email)
@@ -84,6 +85,7 @@ export class PracticeFormPage {
     }
 
     async enterSubjects(subjects: string[]): Promise<void> {
+        await this.subjectsInput.click();
         for (const subject of subjects) {
             await this.subjectsInput.fill(subject)
             await this.subjectsInput.press('Enter')
