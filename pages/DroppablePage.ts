@@ -1,4 +1,4 @@
-import {expect, Locator, Page} from '@playwright/test'
+import { expect, Locator, Page } from '@playwright/test'
 
 
 export class DroppablePage {
@@ -6,25 +6,25 @@ export class DroppablePage {
     private readonly dragMe: Locator
     private readonly droppable: Locator
     private readonly adBanner: Locator
+    private readonly subHeader: Locator
 
-   
+
     constructor(page: Page) {
         this.page = page
         this.dragMe = page.locator('#draggable')
         this.droppable = page.locator('#droppable').first()
         this.adBanner = page.locator('iframe[name*="google_ads_iframe"]')
+        this.subHeader = page.locator('.text-center')
     }
 
     async dragAndDrop(): Promise<void> {
-        // try{
-        //     await this.adBanner.waitFor({ state: 'visible' });
-        // } catch (error) {
-        //     console.log('Ad banner not found or not visible, proceeding with drag and drop.');
-        // }
+        await expect(this.subHeader).toHaveText('Droppable');
+        await this.page.waitForLoadState('networkidle');
         await this.dragMe.scrollIntoViewIfNeeded();
         await this.dragMe.waitFor({ state: 'visible' });
         await this.droppable.waitFor({ state: 'visible' });
         await this.dragMe.dragTo(this.droppable);
+
     }
 
     async verifyDrop(): Promise<void> {
