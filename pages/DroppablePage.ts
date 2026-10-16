@@ -5,16 +5,25 @@ export class DroppablePage {
     readonly page: Page
     private readonly dragMe: Locator
     private readonly droppable: Locator
+    private readonly adBanner: Locator
 
    
     constructor(page: Page) {
         this.page = page
-        this.dragMe = page.getByRole('tabpanel', { name: 'Simple' }).getByText('Drag Me')
-        this.droppable = page.getByRole('tabpanel', { name: 'Simple' }).locator('#droppable')
+        this.dragMe = page.locator('#draggable')
+        this.droppable = page.locator('#droppable').first()
+        this.adBanner = page.locator('iframe[name*="google_ads_iframe"]')
     }
 
     async dragAndDrop(): Promise<void> {
+        try{
+            await this.adBanner.waitFor({ state: 'visible' });
+        } catch (error) {
+            console.log('Ad banner not found or not visible, proceeding with drag and drop.');
+        }
+        await this.dragMe.scrollIntoViewIfNeeded();
         await this.dragMe.waitFor({ state: 'visible' });
+        await this.droppable.waitFor({ state: 'visible' });
         await this.dragMe.dragTo(this.droppable);
     }
 
